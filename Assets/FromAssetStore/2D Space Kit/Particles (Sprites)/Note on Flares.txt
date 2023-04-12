@@ -1,0 +1,1 @@
+Be sure that any flare effects (Namely: Flare.png, Starflare.png) appear on the topmost game layer. Flares are the result of light interacting at the lens of the camera, so having a ship fly over a flare sprite will look very odd!

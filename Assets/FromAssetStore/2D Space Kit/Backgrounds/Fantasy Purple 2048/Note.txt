@@ -1,0 +1,3 @@
+These six backgrounds can be linked together like a standard skybox.
+
+They do not have perspective accounted for, meaning this will look terrible if you use a perspective camera!

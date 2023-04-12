@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
+  m_Name: BurstRifle
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: 6edfae211b8e952438e31cdf84799f15, type: 3}
+  stackable: 0
+  type: 5
+  description: 
+  data:
+    Name: 
+    Id: 9
+    buffs: []
+  model: {fileID: -927199367670048503, guid: 1fd3f599f31216545bc2aa73164c4ed2, type: 3}
+  weaponScript: {fileID: 11400000, guid: 5db2f137ed28def48b168c14d62c13fc, type: 2}

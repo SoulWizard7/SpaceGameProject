@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
+  m_Name: Blaster
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: 09068c671c81abf42ac289edbe284fe8, type: 3}
+  stackable: 0
+  type: 5
+  description: 
+  data:
+    Name: 
+    Id: 0
+    buffs:
+    - attribute: 1
+      value: 0
+      min: 5
+      max: 10
+  model: {fileID: -927199367670048503, guid: ae28c140271a1264a92aaf85e1e67c96, type: 3}
+  weaponScript: {fileID: 11400000, guid: 6fda74d9d6fc03e40b7eb8ee2462cf76, type: 2}

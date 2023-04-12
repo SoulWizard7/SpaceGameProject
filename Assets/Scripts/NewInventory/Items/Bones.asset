@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
+  m_Name: Bones
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: ba345f2f643d842459447c374943401d, type: 3}
+  stackable: 1
+  type: 0
+  description: 
+  data:
+    model: {fileID: 6210532260800422275, guid: 07484937af1439647b7195701c991fcc, type: 3}
+    weaponScript:
+      firePoint: {fileID: 0}
+    Name: 
+    Id: 1
+    buffs: []
+  model: {fileID: 6210532260800422275, guid: 07484937af1439647b7195701c991fcc, type: 3}
+  weaponScript:
+    firePoint: {fileID: 0}

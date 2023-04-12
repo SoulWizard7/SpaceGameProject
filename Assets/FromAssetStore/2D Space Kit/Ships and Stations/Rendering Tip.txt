@@ -1,0 +1,1 @@
+If you don't like the fact that ships get blurry when you zoom in, you can adjust the "Filter Mode" setting on the sprite's import settings. "Point" will keep hard-edged pixels when you zoom in or out.

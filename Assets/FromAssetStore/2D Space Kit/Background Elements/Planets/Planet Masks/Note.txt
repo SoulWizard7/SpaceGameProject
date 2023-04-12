@@ -1,0 +1,7 @@
+Planet masks give the illusion of 3D lighting on a 2D planet.
+
+They are super simple to use:
+
+Drag and drop the planet you want into your scene. Then, drop the planet mask you want to use on top of the planet--meaning the mask will now be a child object of the planet.
+
+Make sure that the planet mask's position is 0,0,0. It should be centered, and look good already. You might need to scale it up or down slightly, especially for the planets labeled (small).

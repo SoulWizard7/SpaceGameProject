@@ -1,0 +1,1 @@
+Instead of including ~20 massive star .pngs for each spectral class, I only created the most common types of stars in a single color. This makes it easy for you to recolor them to whatever suites your needs, and cuts down on the file size of this package.

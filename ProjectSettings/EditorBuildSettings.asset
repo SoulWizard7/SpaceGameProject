@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EnemyShipTestLevelSetupManager.unity
+    guid: 2d5b358a0f4747c41bde89b3ba9f7a8b
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e6684f14a3dcd9141822c120a36c5539
+  - enabled: 1
+    path: Assets/Scenes/InsideShip.unity
+    guid: b8f6d28a0a26d314281e39efbd8aecf4
+  - enabled: 1
+    path: Assets/Scenes/SolarSystem.unity
+    guid: c79add571d6c7a34493af0eed9402726
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: 8d2288dee4817e8428466eb425134d07
+  - enabled: 1
+    path: Assets/Scenes/EnemyShipTest.unity
+    guid: ed7ffc78fe4f6b44ea5da9f12c06bd8b
+  - enabled: 1
+    path: Assets/Scenes/Ship.unity
+    guid: 2dfcc2d120a9bfd41acd8aee72335ae7
+  m_configObjects: {}
