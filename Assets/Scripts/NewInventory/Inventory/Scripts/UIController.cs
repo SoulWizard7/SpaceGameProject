@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -12,10 +13,29 @@ public class UIController : MonoBehaviour
     public DynamicInterface inventoryInterface;
     public StaticInterface equipmentInterface;
     public StaticInterface weaponsInterface;
-    
-    public GameObject Player;
+    public UIItemDisplay uiItemDisplay;
+
     public InteractionController interactionController;
     public PlayerShooting playerShooting;
+
+    public List<TMP_Text> StatblockText;
+    public List<TMP_Text> StatblockValueText;
+
+    public void SetStatScreenNames(Attribute[] attributes)
+    {
+        for (int i = 0; i < attributes.Length; i++)
+        {
+            StatblockText[i].text = attributes[i].type.ToString();
+        }
+    }
+    
+    public void UpdateStatsScreen(Attribute[] attributes)
+    {
+        for (int i = 0; i < attributes.Length; i++)
+        {
+            StatblockValueText[i].text = attributes[i].value.ModifiedValue.ToString();
+        }
+    }
 
     public void CreateRegularInterfaces()
     {

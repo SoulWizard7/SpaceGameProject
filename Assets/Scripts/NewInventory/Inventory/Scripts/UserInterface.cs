@@ -12,22 +12,24 @@ public abstract class UserInterface : MonoBehaviour
 {
     public InventoryObject inventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+    private UIController _uiController;
     private InteractionController _interactionController;
 
     private void Start()
     {
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate{ OnEnterInterface(gameObject); }); 
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate{ OnExitInterface(gameObject); });
-        
-        _interactionController = GetComponentInParent<UIController>().interactionController;
+
+        _uiController = GetComponentInParent<UIController>();
+        _interactionController = _uiController.interactionController;
         
         //print(string.Concat("hej from ", inventory.name));
         //CreateUI();
     }
 
-    protected GameObject GetPlayer()
+    protected UIController GetUIController()
     {
-        return GetComponentInParent<UIController>().Player;
+        return _uiController;
     }
     
     public InteractionController GetController()
@@ -122,6 +124,12 @@ public abstract class UserInterface : MonoBehaviour
     public void OnDragStart(GameObject obj)
     {
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
+        GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+    }
+
+    public void OnClick(GameObject obj)
+    {
+        GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
     }
 
     public GameObject CreateTempItem(GameObject obj)

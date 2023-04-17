@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 56.224, y: 0, z: 0}
 --- !u!20 &6807406952309624166
 Camera:
@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleDegrees: 135
-  dist: 25
-  _player: {fileID: 0}
+  dist: 15
+  playerGameObject: {fileID: 0}
   curDist: 0
   maxDist: 1
   lerpSpeed: 1

@@ -11,6 +11,7 @@ public enum ItemType
     Chest,
     Boots,
     Weapon,
+    WeaponMod,
     Default
 }
 
@@ -20,6 +21,14 @@ public enum Attributes
     AimBuff,
     Stamina,
     Armor
+}
+
+public enum ModType
+{
+    Sight,
+    Stock,
+    Magazine,
+    Handle
 }
 
 [CreateAssetMenu(fileName = "New item object,", menuName = "Inventory system/Items/item_USE_THIS")]
@@ -47,6 +56,7 @@ public class Item
     public string Name;
     public int Id = -1;
     public ItemBuff[] buffs;
+    public ItemMod[] weaponMods;
 
     public Item()
     {
@@ -65,9 +75,16 @@ public class Item
             {
                 attribute = item.data.buffs[i].attribute
             };
+        }
 
-            // buffs[i] = new ItemBuff(item.data.buffs[i].min, item.data.buffs[i].max);
-            // buffs[i].attribute = item.data.buffs[i].attribute;
+        weaponMods = new ItemMod[item.data.weaponMods.Length];
+        for (int i = 0; i < weaponMods.Length; i++)
+        {
+            weaponMods[i] = new ItemMod(item.data.weaponMods[i].durMin, item.data.weaponMods[i].durMax,
+                item.data.weaponMods[i].helpMin, item.data.weaponMods[i].helpMax)
+            {
+                modType = item.data.weaponMods[i].modType
+            };
         }
     }
 }
@@ -95,5 +112,43 @@ public class ItemBuff : IModifier
     public void AddValue(ref int baseValue)
     {
         baseValue += value;
+    }
+}
+
+[System.Serializable]
+public class ItemMod : IModifier
+{
+    public ModType modType;
+    public float durability;
+    public float durMin;
+    public float durMax;
+    public int helpValue;
+    public int helpMin;
+    public int helpMax;
+    
+    public ItemMod(float _durMin, float _durMax, int _helpMin, int _helpMax)
+    {
+        durMin = _durMin;
+        durMax = _durMax;
+        GenerateDurabilityValue();
+        
+        helpMin = _helpMin;
+        helpMax = _helpMax;
+        GenerateHelpValue();
+    }
+    
+    public void GenerateDurabilityValue()
+    {
+        durability = UnityEngine.Random.Range(durMin, durMax);
+    }
+    
+    public void GenerateHelpValue()
+    {
+        helpValue = UnityEngine.Random.Range(helpMin, helpMax);
+    }
+
+    public void AddValue(ref int baseValue)
+    {
+        baseValue += helpValue;
     }
 }

@@ -80,6 +80,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyMaterial: {fileID: 2100000, guid: 54a7b0d410600ca4fa4dc45eef522d50, type: 2}
   dodgeMaterial: {fileID: 2100000, guid: 6cf240c971734c746865d4bf65bba43d, type: 2}
+  normalColor: {r: 1, g: 0.108153, b: 0, a: 1}
+  dodgeColor: {r: 1, g: 0.7678805, b: 0, a: 0.6509804}
   body: {fileID: 340519901871635166}
   movementSpeed: 4
   dodgeCurve:
@@ -150,7 +152,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  input: {fileID: 0}
 --- !u!114 &2146016228623737666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,11 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa4373229eefcd48967673b038ae6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponGameObject: {fileID: 0}
-  currentWeaponIndex: 0
-  currentWeapon: {fileID: 0}
-  input: {fileID: 0}
   gunPosition: {fileID: 1581127649017640455}
+  currentWeaponIndex: 0
 --- !u!114 &7582517138378202719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +228,7 @@ GameObject:
   - component: {fileID: 340519901871635166}
   - component: {fileID: 8957766506993902084}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +278,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 54a7b0d410600ca4fa4dc45eef522d50, type: 2}
+  - {fileID: 2100000, guid: a890ce31a2af0b44daac1caa4573408e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

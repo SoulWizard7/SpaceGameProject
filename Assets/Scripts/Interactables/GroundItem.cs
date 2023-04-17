@@ -2,15 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class GroundItem : InteractableObject, ISerializationCallbackReceiver
 {
-    public ItemObject itemObject;
+    [HideInInspector]public ItemObject itemObject;
     public Item item;
     public GameObject model;
-    public bool hasBeenDropped = false;
     public AnimationCurve dropCurve;
 
     public override void Interact(InteractionController interactionController)
@@ -18,28 +18,12 @@ public class GroundItem : InteractableObject, ISerializationCallbackReceiver
         PickupObject(interactionController);
     }
 
-    private void Start()
+    public void DroppedObject(ItemObject _itemObject, Item _item)
     {
-        Destroy(GetComponentInChildren<SpriteRenderer>()); // Remove component from prefab when no longer needed
-        
-        
-        if (!hasBeenDropped)
-        {
-            item = new Item(itemObject);
-        }
-        
-
-        if (model == null)
-        {
-            if (itemObject.model)
-            {
-                model = Instantiate(itemObject.model, transform.position, quaternion.identity, transform);
-            }
-            else
-            {
-                print("Database model is null");
-            }
-        }
+        itemObject = _itemObject;
+        item = _item;
+        model = Instantiate(itemObject.model, transform.position, quaternion.identity, transform);
+        StartCoroutine(DropAnim(transform.forward));
     }
 
     void PickupObject(InteractionController interactionController)
@@ -67,6 +51,28 @@ public class GroundItem : InteractableObject, ISerializationCallbackReceiver
         }
     }
 
+    private void OnEnable()
+    {
+        GroundItemManager.GroundItems.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        GroundItemManager.GroundItems.Remove(this);
+    }
+
+    public void RefreshItem()
+    {
+        DestroyImmediate(model);
+        model = Instantiate(itemObject.model, transform.position, quaternion.identity, transform);
+        item = new Item(itemObject);
+    }
+
+    private void OnApplicationQuit()
+    {
+        model.Serialize();
+    }
+
     public void OnBeforeSerialize()
     {
         /*
@@ -80,5 +86,6 @@ public class GroundItem : InteractableObject, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
+        
     }
 }

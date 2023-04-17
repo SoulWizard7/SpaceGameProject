@@ -8,8 +8,22 @@ public class TopDownMovement : MonoBehaviour
     [Header("Debug stuff")]
     [SerializeField] private Material bodyMaterial;
     [SerializeField] private Material dodgeMaterial;
-    [SerializeField] private MeshRenderer body;
+
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color dodgeColor;
     
+    [SerializeField] private MeshRenderer body;
+    private MaterialPropertyBlock mbp;
+
+    public MaterialPropertyBlock Mbp
+    {
+        get
+        {
+            if (mbp == null) mbp = new MaterialPropertyBlock();
+            return mbp;
+        }
+    }
+
     [Header("Player Variables")]
     [SerializeField] private float movementSpeed;
     //[SerializeField] private float jumpHeight;
@@ -36,12 +50,25 @@ public class TopDownMovement : MonoBehaviour
     // [NonSerialized] public Vector3 _jumpSmashVelocity;
 
     public Plane plane = new Plane(Vector3.up, -1.5f); //-1.5 helps with aiming for some reason
+    private static readonly int Color1 = Shader.PropertyToID("_BaseColor");
 
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         InputHandler.dodgeButton += Dodge;
+        ApplyColor(normalColor);
+    }
+
+    private void OnValidate()
+    {
+        ApplyColor(normalColor);
+    }
+
+    void ApplyColor(Color color)
+    {
+        Mbp.SetColor(Color1, color);
+        body.SetPropertyBlock(Mbp);
     }
 
     public void SetCamera(GameObject cameraGameObject)
@@ -105,7 +132,7 @@ public class TopDownMovement : MonoBehaviour
 
     public void Dodge()
     {
-        if (_move.magnitude >= 0.3f)
+        if (_move.magnitude >= 0.3f && !bIsDodging)
         {
             bIsDodging = true;
             StartCoroutine(DodgeRoll(_move));
@@ -114,7 +141,8 @@ public class TopDownMovement : MonoBehaviour
 
     IEnumerator DodgeRoll(Vector3 dir)
     {
-        body.material = dodgeMaterial;
+        //body.material = dodgeMaterial;
+        ApplyColor(dodgeColor);
         Debug.Log("startDodge");
         float timer = 0;
         while (timer < dodgeLengthTime)
@@ -128,6 +156,7 @@ public class TopDownMovement : MonoBehaviour
         }
         Debug.Log("endDodge");
         bIsDodging = false;
-        body.material = bodyMaterial;
+        //body.material = bodyMaterial;
+        ApplyColor(normalColor);
     }
 }

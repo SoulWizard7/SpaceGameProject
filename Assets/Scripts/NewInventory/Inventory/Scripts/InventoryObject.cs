@@ -11,7 +11,8 @@ public enum InterfaceType
     Inventory,
     Equipment,
     Chest,
-    Weapon
+    Weapon,
+    WeaponMod
 }
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory system/Inventory")]
@@ -221,10 +222,10 @@ public class InventorySlot //Data class
         if (OnAfterUpdate != null)
         {
             OnAfterUpdate.Invoke(this);
-            // Is now an event in UpdateSlot - OnAfterUpdate
-            // if (parent.inventory.type == InterfaceType.Weapon)
+            
+            // if (parent.inventory.type == InterfaceType.Weapon) 
             // {
-            //     parent.GetController().playerShooting.CheckWeapon();
+            //     parent.GetController().playerShooting.CheckWeapon(); // Is now an event in UpdateSlot - OnAfterUpdate
             // }
         }
     }

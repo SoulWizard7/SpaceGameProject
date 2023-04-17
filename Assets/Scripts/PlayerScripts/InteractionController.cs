@@ -103,11 +103,11 @@ public class InteractionController : MonoBehaviour
 
     public void SpawnObject(ItemObject itemObject, Item item)
     {
-        GroundItem groundItem = Instantiate(itemPrefab, transform.position, Quaternion.identity).GetComponent<GroundItem>();
-        groundItem.hasBeenDropped = true;
-        groundItem.itemObject = itemObject;
-        groundItem.item = item;
-        groundItem.StartCoroutine(groundItem.DropAnim(transform.forward));
+        Instantiate(itemPrefab, transform.position, Quaternion.identity).GetComponent<GroundItem>().DroppedObject(itemObject, item);
+        // groundItem.hasBeenDropped = true;
+        // groundItem.itemObject = itemObject;
+        // groundItem.item = item;
+        // groundItem.StartCoroutine(groundItem.DropAnim(transform.forward));
     }
 
     private void OnApplicationQuit()

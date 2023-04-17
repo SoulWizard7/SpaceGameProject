@@ -11,12 +11,14 @@ public class LevelSetupManager : MonoBehaviour
     public GameObject CameraPrefab;
     public GameObject EventSystemPrefab;
 
-    private UIController UI;
+    //private UIController UI;
 
     public void Awake()
     {
+        //I love spaghetti and meatballs
+        
         GameObject player = Instantiate(PlayerPrefab, transform.position, Quaternion.identity);
-        UI = Instantiate(UIPrefab, transform.position, Quaternion.identity).GetComponent<UIController>();
+        UIController UI = Instantiate(UIPrefab, transform.position, Quaternion.identity).GetComponent<UIController>();
         Instantiate(EventSystemPrefab, transform.position, Quaternion.identity);
         Instantiate(InputHandlerPrefab, transform.position, Quaternion.identity).GetComponent<InputHandler>();
         GameObject camera = Instantiate(CameraPrefab, transform.position, Quaternion.identity);
@@ -31,7 +33,6 @@ public class LevelSetupManager : MonoBehaviour
         PlayerShooting playerShooting = player.GetComponent<PlayerShooting>();
         UI.CreateRegularInterfaces();
         UI.ToggleInventory();
-        UI.Player = player;
         UI.interactionController = interactionController;
         UI.playerShooting = playerShooting;
     }

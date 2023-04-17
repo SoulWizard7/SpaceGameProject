@@ -27,11 +27,18 @@ public class PlayerStats : MonoBehaviour
             _interactionController.equipment.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
             _interactionController.equipment.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
         }
+
+        ApplyAttributeNames();
         // for (int i = 0; i < _interactionController.weapons.GetSlots.Length; i++)
         // {
         //     _interactionController.weapons.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
         //     _interactionController.weapons.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
         // }
+    }
+
+    private void ApplyAttributeNames()
+    {
+        _interactionController.UIController.SetStatScreenNames(attributes);
     }
 
 
@@ -69,8 +76,10 @@ public class PlayerStats : MonoBehaviour
 
     public void OnAfterSlotUpdate(InventorySlot _slot)
     {
+        
         if (_slot.ItemObject == null)
         {
+            _interactionController.UIController.UpdateStatsScreen(attributes);
             return;
         }
         
@@ -91,6 +100,8 @@ public class PlayerStats : MonoBehaviour
                         }
                     }
                 }
+                
+                _interactionController.UIController.UpdateStatsScreen(attributes);
                 
                 break;
             case InterfaceType.Chest:
