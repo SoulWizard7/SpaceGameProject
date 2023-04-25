@@ -19,113 +19,113 @@ MonoBehaviour:
     Slots:
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0
     - AllowedItems: 
       item:
-        model: {fileID: 0}
         Name: 
         Id: -1
         buffs: []
+        weaponMods: []
       amount: 0

@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public StaticInterface equipmentInterface;
     public StaticInterface weaponsInterface;
     public UIItemDisplay uiItemDisplay;
+    public UIHoverItemDisplayController uiHoverItemDisplayController;
 
     public InteractionController interactionController;
     public PlayerShooting playerShooting;
@@ -37,12 +38,14 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void CreateRegularInterfaces()
+    public void CreateRegularInterfaces() //used at Awake
     {
         inventoryInterface.CreateUI();
         equipmentInterface.CreateUI();
         chestInterface.CreateUI();
         weaponsInterface.CreateUI();
+        
+        uiHoverItemDisplayController.interactionController = interactionController;
     }
 
     public void ToggleInventory()
@@ -62,7 +65,11 @@ public class UIController : MonoBehaviour
 
     public void OpenChestScreen(InventoryObject inventory)
     {
-        chestInterface.RemoveAllSlots();
+        if (chestInterface.inventory)
+        {
+            chestInterface.RemoveAllSlots();
+        }
+        
         chestInterface.inventory = inventory;
         chestInterface.CreateUI();
         
@@ -79,6 +86,7 @@ public class UIController : MonoBehaviour
 
     public void CloseChestScreen()
     {
+        if(interactionController) interactionController.chestOpen = false;
         chestScreen.SetActive(false);
     }
 

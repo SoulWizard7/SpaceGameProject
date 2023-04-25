@@ -17,16 +17,13 @@ MonoBehaviour:
   type: 3
   description: 
   data:
-    model: {fileID: 4815375127870446346, guid: efa5bc514feb85f48b62879b9581d1cb, type: 3}
-    weaponScript:
-      firePoint: {fileID: 0}
-    Name: 
+    Name: Chest Armor
     Id: 3
     buffs:
     - attribute: 3
       value: 0
       min: 5
       max: 10
+    weaponMods: []
   model: {fileID: 4815375127870446346, guid: efa5bc514feb85f48b62879b9581d1cb, type: 3}
-  weaponScript:
-    firePoint: {fileID: 0}
+  weaponScript: {fileID: 0}

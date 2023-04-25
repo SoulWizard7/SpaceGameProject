@@ -17,12 +17,13 @@ MonoBehaviour:
   type: 5
   description: 
   data:
-    Name: 
+    Name: Blaster
     Id: 0
     buffs:
     - attribute: 1
       value: 0
       min: 5
       max: 10
+    weaponMods: []
   model: {fileID: -927199367670048503, guid: ae28c140271a1264a92aaf85e1e67c96, type: 3}
   weaponScript: {fileID: 11400000, guid: 6fda74d9d6fc03e40b7eb8ee2462cf76, type: 2}

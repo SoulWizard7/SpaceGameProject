@@ -16,6 +16,8 @@ public class WeaponBase : ScriptableObject
     [TextArea(15, 10)] 
     public string description;
     
+    public ItemObject[] defaultMods = new ItemObject[4];
+    
     public static float TAU = 6.28f;
     public static Vector2 AngToDir(float angleRad) => new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
     public static float DegreesToRadians(float angleInDegrees)

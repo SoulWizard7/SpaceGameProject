@@ -38,7 +38,7 @@ public class TopDownMovement : MonoBehaviour
     private CharacterController _controller;
     
     private float _turnSmoothVelocity = 0f;
-    private float _turnSmoothTime = 0.1f;
+    private float _turnSmoothTime = 0.05f;
     private bool _bIsGrounded;
     public bool bIsDodging { get; private set; }
     private float gravity = -9.81f;

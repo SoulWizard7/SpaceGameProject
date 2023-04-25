@@ -28,13 +28,13 @@ public class LevelSetupManager : MonoBehaviour
         tdm.camPos = camera.transform;
         tdm.SetCamera(camera);
         InteractionController interactionController = player.GetComponent<InteractionController>();
-        interactionController.UIController = UI;
+        interactionController.uiController = UI;
 
         PlayerShooting playerShooting = player.GetComponent<PlayerShooting>();
-        UI.CreateRegularInterfaces();
-        UI.ToggleInventory();
         UI.interactionController = interactionController;
         UI.playerShooting = playerShooting;
+        UI.CreateRegularInterfaces();
+        UI.ToggleInventory();
     }
 
     private void OnDrawGizmos()

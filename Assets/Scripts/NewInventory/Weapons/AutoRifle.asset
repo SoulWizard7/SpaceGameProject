@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: AutoRifle
   m_EditorClassIdentifier: 
   description: 
+  defaultMods:
+  - {fileID: 11400000, guid: a76df45bf29a61841b8c502dc661890d, type: 2}
+  - {fileID: 11400000, guid: 8b20f4d4147c7694796fcbae73055bc5, type: 2}
+  - {fileID: 11400000, guid: 3ac2b714ad9f8794aa0c218af8c3d1ef, type: 2}
+  - {fileID: 11400000, guid: 5a6a0d1839119a643a4f5964ff5f1985, type: 2}
   fireType: 1
   projectileAmount: 1
   aimDistortion: 4

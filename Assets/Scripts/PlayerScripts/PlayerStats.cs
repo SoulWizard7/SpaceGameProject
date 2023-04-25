@@ -38,7 +38,7 @@ public class PlayerStats : MonoBehaviour
 
     private void ApplyAttributeNames()
     {
-        _interactionController.UIController.SetStatScreenNames(attributes);
+        _interactionController.uiController.SetStatScreenNames(attributes);
     }
 
 
@@ -79,7 +79,7 @@ public class PlayerStats : MonoBehaviour
         
         if (_slot.ItemObject == null)
         {
-            _interactionController.UIController.UpdateStatsScreen(attributes);
+            _interactionController.uiController.UpdateStatsScreen(attributes);
             return;
         }
         
@@ -101,7 +101,7 @@ public class PlayerStats : MonoBehaviour
                     }
                 }
                 
-                _interactionController.UIController.UpdateStatsScreen(attributes);
+                _interactionController.uiController.UpdateStatsScreen(attributes);
                 
                 break;
             case InterfaceType.Chest:

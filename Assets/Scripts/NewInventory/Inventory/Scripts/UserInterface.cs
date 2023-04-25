@@ -27,7 +27,7 @@ public abstract class UserInterface : MonoBehaviour
         //CreateUI();
     }
 
-    protected UIController GetUIController()
+    public UIController GetUIController()
     {
         return _uiController;
     }
@@ -58,6 +58,8 @@ public abstract class UserInterface : MonoBehaviour
         
         slotsOnInterface.UpdateSlotDisplay();
     }
+
+    
 
     private void CheckCurrentWeapon(InventorySlot _slot)
     {
@@ -98,10 +100,29 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    //     slotsOnInterface.UpdateSlotDisplay();
-    // }
+    private bool _isHovering;
+    private float _timeToHoverDisplay = 0.35f;
+    private float _hoverTimer = 0f;
+
+    private void StartHover(ItemObject itemObject)
+    {
+        _hoverTimer = 0f;
+        _isHovering = true;
+        print("ass");
+    }
+
+    private void Update()
+    {
+        if (_isHovering)
+        {
+            _hoverTimer += Time.deltaTime;
+            if (_hoverTimer > _timeToHoverDisplay)
+            {
+                _uiController.uiHoverItemDisplayController.EnableHoverItemDisplay();
+                _isHovering = false;
+            }
+        }
+    }
 
     public abstract void CreateSlots();
 
@@ -116,15 +137,19 @@ public abstract class UserInterface : MonoBehaviour
     public void OnEnter(GameObject obj)
     {
         MouseData.slotHoveredOver = obj;
+        StartHover(slotsOnInterface[obj].ItemObject);
     }
-    public void OnExit(GameObject o)
+    public void OnExit(GameObject obj)
     {
         MouseData.slotHoveredOver = null;
+        _uiController.uiHoverItemDisplayController.DisableHoverItemDisplay();
+        _isHovering = false;
     }
     public void OnDragStart(GameObject obj)
     {
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
-        GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+        _uiController.uiHoverItemDisplayController.DisableHoverItemDisplay();
+        //GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
     }
 
     public void OnClick(GameObject obj)
@@ -166,6 +191,30 @@ public abstract class UserInterface : MonoBehaviour
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+        }
+    }
+
+    public void OnDragEndWeaponMod(GameObject obj)
+    {
+        Destroy(MouseData.tempItemBeingDragged);
+
+        if (MouseData.interfaceMouseIsOver == null)
+        {
+            GetController().SpawnObject(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+            slotsOnInterface[obj].RemoveItem();
+            if (inventory.type == InterfaceType.Weapon)
+            {
+                //GetController().playerShooting.CheckWeapon();
+            }
+            return;
+        }
+
+        if (MouseData.slotHoveredOver)
+        {
+            InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+            inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+            
+            
         }
     }
 

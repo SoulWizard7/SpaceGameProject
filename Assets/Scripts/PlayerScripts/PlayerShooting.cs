@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Transform gunPosition;
-    [HideInInspector]public int currentWeaponIndex = 0;
+    public int currentWeaponIndex = 0;
     
     private FireType _fireType;
     private GameObject _currentWeaponGameObject;
@@ -19,7 +19,7 @@ public class PlayerShooting : MonoBehaviour
     
     // variables for shooting
     private Transform _firePointLocal;
-    private int _currentWeaponId;
+    private int _currentWeaponId = -1;
     private float _firePointDist;
     private bool _canFire;
     private float _fireRate;
@@ -52,6 +52,8 @@ public class PlayerShooting : MonoBehaviour
         _topDownMovement = GetComponent<TopDownMovement>();
         _stats = GetComponent<PlayerStats>();
         _controller = GetComponent<InteractionController>();
+        
+        _currentWeaponId = -1;
 
         InputHandler.leftMouseButtonDown += FireWeapon;
     }
@@ -66,6 +68,10 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
         _canFire = true;
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            CheckWeapon();
+        }
     }
 
     public void FireWeapon()
@@ -152,7 +158,8 @@ public class PlayerShooting : MonoBehaviour
 
     public void CheckWeapon()
     {
-        _controller.UIController.OpenWeaponsScreen();
+        _controller.uiController.OpenWeaponsScreen();
+        //_currentWeaponId = _controller.weapons.GetSlots[currentWeaponIndex].ItemObject.data.Id;
         
         if (_currentWeaponId == -1) // has no weapon
         {
@@ -182,6 +189,7 @@ public class PlayerShooting : MonoBehaviour
                 RemoveCurrentWeapon();
             }
         }
+        _controller.uiController.uiHoverItemDisplayController.UpdateCompareWeaponDisplay();
     }
 
     private void OnDrawGizmos()
@@ -213,4 +221,6 @@ public class PlayerShooting : MonoBehaviour
         _currentWeaponGameObject.transform.Rotate(Vector3.up, 90f); // Models should be correct rotation but are not
         //print("instantiated new weapon");
     }
+    
+    
 }

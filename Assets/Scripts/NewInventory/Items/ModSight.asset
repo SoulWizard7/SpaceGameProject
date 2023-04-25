@@ -10,16 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
-  m_Name: Fish
+  m_Name: ModSight
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: af04f3196abef440b94c03fbe3dab00f, type: 3}
-  stackable: 1
-  type: 0
-  description: 
+  uiDisplay: {fileID: 21300000, guid: 1e7881f6af9ad4c0eb01def7f1b8a31b, type: 3}
+  stackable: 0
+  type: 6
+  description: Sight
   data:
-    Name: Fish
-    Id: 4
+    Name: Weapon Mod Sight
+    Id: 10
     buffs: []
-    weaponMods: []
-  model: {fileID: 6100857278189346583, guid: 7c10d94082392114f82b2241e256e694, type: 3}
+    weaponMods:
+    - modType: 0
+      durability: 6
+      durMin: 6
+      durMax: 6
+      helpValue: 6
+      helpMin: 6
+      helpMax: 6
+      itemId: 10
+  model: {fileID: 6210532260800422275, guid: 91c49396ef48b934295be3a42f25b7b5, type: 3}
   weaponScript: {fileID: 0}

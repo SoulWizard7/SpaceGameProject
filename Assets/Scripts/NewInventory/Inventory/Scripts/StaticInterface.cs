@@ -21,19 +21,49 @@ public class StaticInterface : UserInterface
         }
 
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+
+        if (inventory.type == InterfaceType.WeaponMod)
         {
-            var obj = slots[i];
+            for (int i = 0; i < inventory.GetSlots.Length; i++)
+            {
+                
+                var obj = slots[i];
             
-            AddEvent(obj, EventTriggerType.PointerEnter, delegate{ OnEnter(obj); });
-            AddEvent(obj, EventTriggerType.PointerExit, delegate{ OnExit(obj); });
-            AddEvent(obj, EventTriggerType.BeginDrag, delegate{ OnDragStart(obj); });
-            AddEvent(obj, EventTriggerType.EndDrag, delegate{ OnDragEnd(obj); });
-            AddEvent(obj, EventTriggerType.Drag, delegate{ OnDrag(obj); });
-            AddEvent(obj, EventTriggerType.PointerClick, delegate{ OnClick(obj); });
-            inventory.GetSlots[i].slotDisplay = obj;
+                AddEvent(obj, EventTriggerType.PointerEnter, delegate{ OnEnter(obj); });
+                AddEvent(obj, EventTriggerType.PointerExit, delegate{ OnExit(obj); });
+                AddEvent(obj, EventTriggerType.BeginDrag, delegate{ OnDragStart(obj); });
+                AddEvent(obj, EventTriggerType.EndDrag, delegate{ OnDragEndWeaponMod(obj); });
+                AddEvent(obj, EventTriggerType.Drag, delegate{ OnDrag(obj); });
+                //AddEvent(obj, EventTriggerType.PointerClick, delegate{ OnClick(obj); });
+                inventory.GetSlots[i].slotDisplay = obj;
             
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+                slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+            }
+        }
+        else // other static interface
+        {
+            for (int i = 0; i < inventory.GetSlots.Length; i++)
+            {
+                var obj = slots[i];
+            
+                AddEvent(obj, EventTriggerType.PointerEnter, delegate{ OnEnter(obj); });
+                AddEvent(obj, EventTriggerType.PointerExit, delegate{ OnExit(obj); });
+                AddEvent(obj, EventTriggerType.BeginDrag, delegate{ OnDragStart(obj); });
+                AddEvent(obj, EventTriggerType.EndDrag, delegate{ OnDragEnd(obj); });
+                AddEvent(obj, EventTriggerType.Drag, delegate{ OnDrag(obj); });
+                AddEvent(obj, EventTriggerType.PointerClick, delegate{ OnClick(obj); });
+                inventory.GetSlots[i].slotDisplay = obj;
+            
+                slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+            }
+        }
+    }
+
+    public void SetSlotsActive(bool state)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].SetActive(state);
         }
     }
 

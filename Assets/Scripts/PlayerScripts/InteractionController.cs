@@ -14,10 +14,14 @@ public class InteractionController : MonoBehaviour
     public InventoryObject equipment;
     public InventoryObject weapons;
 
-    public UIController UIController;
+    public UIController uiController;
     public GameObject itemPrefab;
 
-    public float interactionMaxDistance = 2f;
+    public float interactionMaxDistance = 3f;
+    public float chestInteractionMaxDistance = 3f;
+
+    private Vector3 currentChestPos;
+    [HideInInspector]public bool chestOpen = false;
     
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class InteractionController : MonoBehaviour
 
         if (Input.GetButtonDown("InventoryButton"))
         {
-            UIController.ToggleInventory();
+            uiController.ToggleInventory();
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -60,6 +64,23 @@ public class InteractionController : MonoBehaviour
             playerShooting.currentWeaponIndex = 2;
             playerShooting.CheckWeapon();
         }
+
+        if (chestOpen)
+        {
+            float dist = Vector3.Distance(transform.position, currentChestPos);
+            if (dist > chestInteractionMaxDistance)
+            {
+                uiController.CloseChestScreen();
+                chestOpen = false;
+            }
+        }
+    }
+    
+    public void OpenChest(InventoryObject chest, Vector3 chestPos)
+    {
+        currentChestPos = chestPos;
+        uiController.OpenChestScreen(chest);
+        chestOpen = true;
     }
 
     public void SaveInventory()
@@ -74,6 +95,7 @@ public class InteractionController : MonoBehaviour
         inventory.Load();
         equipment.Load();
         weapons.Load();
+        playerShooting.currentWeaponIndex = 0;
         playerShooting.CheckWeapon();
     }
 
@@ -92,12 +114,12 @@ public class InteractionController : MonoBehaviour
             InteractableObject interactableObject = hit.collider.GetComponent<InteractableObject>();
             if (interactableObject)
             {
-                Debug.DrawLine(startPos, startPos + (dir * 3), Color.cyan, 1f);
+                Debug.DrawLine(startPos, startPos + (dir * interactionMaxDistance), Color.cyan, 1f);
                 return interactableObject;
             }
         }
         
-        Debug.DrawRay(startPos, dir, Color.red, 1f);
+        Debug.DrawRay(startPos, dir * interactionMaxDistance, Color.red, 1f);
         return null;
     }
 
@@ -110,11 +132,18 @@ public class InteractionController : MonoBehaviour
         // groundItem.StartCoroutine(groundItem.DropAnim(transform.forward));
     }
 
+    public ItemObject GetCurrentWeapon()
+    {
+        return weapons.GetSlots[playerShooting.currentWeaponIndex].ItemObject;
+    }
+
     private void OnApplicationQuit()
     {
         inventory.Clear();
         equipment.Clear();
         weapons.Clear();
     }
+
+    
 }
 

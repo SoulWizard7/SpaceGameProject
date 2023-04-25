@@ -77,14 +77,25 @@ public class Item
             };
         }
 
-        weaponMods = new ItemMod[item.data.weaponMods.Length];
+        if (item.weaponScript == null)
+        {
+            weaponMods = Array.Empty<ItemMod>();
+            return;
+        }
+
+        if (item.weaponScript == null) return;
+
+        weaponMods = new ItemMod[item.weaponScript.defaultMods.Length];
         for (int i = 0; i < weaponMods.Length; i++)
         {
+            weaponMods[i] = item.weaponScript.defaultMods[i].data.weaponMods[0];
+            weaponMods[i].itemId = item.weaponScript.defaultMods[i].data.Id;
+            /*
             weaponMods[i] = new ItemMod(item.data.weaponMods[i].durMin, item.data.weaponMods[i].durMax,
                 item.data.weaponMods[i].helpMin, item.data.weaponMods[i].helpMax)
             {
                 modType = item.data.weaponMods[i].modType
-            };
+            };*/
         }
     }
 }
@@ -125,6 +136,7 @@ public class ItemMod : IModifier
     public int helpValue;
     public int helpMin;
     public int helpMax;
+    public int itemId;
     
     public ItemMod(float _durMin, float _durMax, int _helpMin, int _helpMax)
     {
@@ -135,6 +147,19 @@ public class ItemMod : IModifier
         helpMin = _helpMin;
         helpMax = _helpMax;
         GenerateHelpValue();
+    }
+
+    public ItemMod(ModType _modType, float _durability, int _helpValue, int _itemId)
+    {
+        modType = _modType;
+        durability = _durability;
+        helpValue = _helpValue;
+        itemId = _itemId;
+    }
+
+    public ItemMod(bool noItem)
+    {
+        itemId = -1;
     }
     
     public void GenerateDurabilityValue()

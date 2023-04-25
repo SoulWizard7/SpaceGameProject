@@ -24,6 +24,18 @@ public class InventoryObject : ScriptableObject
     public Inventory Container;
     public InventorySlot[] GetSlots { get { return Container.Slots; } }
 
+    public int GetSlotIndex(InventorySlot slot)
+    {
+        for (int i = 0; i < Container.Slots.Length; i++)
+        {
+            if (Container.Slots[i] == slot)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public bool AddItem(Item _item, int _amount)
     {
         //Issue with order of checking, if inventory is full stackable objects will not be added.
@@ -87,9 +99,23 @@ public class InventoryObject : ScriptableObject
     {
         if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
         {
+            if (item2.parent.inventory.type == InterfaceType.WeaponMod) 
+            {
+                Debug.Log("ass2");
+                Debug.Log(item2.parent.inventory.GetSlotIndex(item2));
+
+                item2.parent.GetUIController().uiItemDisplay.currentDisplayItem.weaponMods[item2.parent.inventory.GetSlotIndex(item2)] = new ItemMod(item1.item.weaponMods[0].modType, item1.item.weaponMods[0].durability, item1.item.weaponMods[0].helpValue, item1.item.weaponMods[0].itemId);
+            }
+            if (item1.parent.inventory.type == InterfaceType.WeaponMod)
+            {
+                item1.parent.GetUIController().uiItemDisplay.currentDisplayItem.weaponMods[GetSlotIndex(item1)] = new ItemMod(false);
+                Debug.Log("ass1");
+            }
+            
             InventorySlot temp = new InventorySlot(item2.item, item2.amount);
             item2.UpdateSlot(item1.item, item1.amount);
             item1.UpdateSlot(temp.item, temp.amount);
+            
 
             // Is now an event in UpdateSlot - OnAfterUpdate
             // if (item2.parent.inventory.type == InterfaceType.Weapon) 

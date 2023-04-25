@@ -17,10 +17,7 @@ MonoBehaviour:
   type: 4
   description: 
   data:
-    model: {fileID: 3358151573810978583, guid: 8a2ecf754b11b484ab15ea65a37a8b75, type: 3}
-    weaponScript:
-      firePoint: {fileID: 0}
-    Name: 
+    Name: Boots
     Id: 2
     buffs:
     - attribute: 0
@@ -31,6 +28,6 @@ MonoBehaviour:
       value: 0
       min: 5
       max: 10
+    weaponMods: []
   model: {fileID: 3358151573810978583, guid: 8a2ecf754b11b484ab15ea65a37a8b75, type: 3}
-  weaponScript:
-    firePoint: {fileID: 0}
+  weaponScript: {fileID: 0}

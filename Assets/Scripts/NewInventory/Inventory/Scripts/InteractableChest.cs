@@ -1,25 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractableChest : InteractableObject
 {
     public InventoryObject chest;
-    private bool isInteracting = false;
-    
+
     public override void Interact(InteractionController interactionController)
     {
-        interactionController.UIController.OpenChestScreen(chest);
-        
-        if (isInteracting)
+        if (!IsThisChestOpen(interactionController))
         {
-            isInteracting = false;
-        }
-        else
-        {
-            isInteracting = true;
-            
+            interactionController.OpenChest(chest, transform.position);
         }
     }
-    
+
+    bool IsThisChestOpen(InteractionController interactionController)
+    {
+        if (interactionController.uiController.chestScreen.activeSelf)
+        {
+            if (interactionController.uiController.chestInterface.inventory == chest)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

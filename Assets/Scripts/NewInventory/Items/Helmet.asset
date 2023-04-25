@@ -17,10 +17,7 @@ MonoBehaviour:
   type: 2
   description: 
   data:
-    model: {fileID: 6092731379541940764, guid: da398d74996245f4c8a9253e8e6eb6a5, type: 3}
-    weaponScript:
-      firePoint: {fileID: 0}
-    Name: 
+    Name: Helmet
     Id: 5
     buffs:
     - attribute: 3
@@ -31,6 +28,6 @@ MonoBehaviour:
       value: 0
       min: 2
       max: 5
+    weaponMods: []
   model: {fileID: 6092731379541940764, guid: da398d74996245f4c8a9253e8e6eb6a5, type: 3}
-  weaponScript:
-    firePoint: {fileID: 0}
+  weaponScript: {fileID: 0}

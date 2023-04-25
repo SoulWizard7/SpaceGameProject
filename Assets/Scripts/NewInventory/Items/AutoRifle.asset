@@ -22,34 +22,11 @@ MonoBehaviour:
     Name: Automatic Rifle
     Id: 7
     buffs: []
-    weaponMods:
-    - modType: 0
-      durability: 0
-      durMin: 50
-      durMax: 100
-      helpValue: 0
-      helpMin: 0
-      helpMax: 10
-    - modType: 1
-      durability: 0
-      durMin: 50
-      durMax: 100
-      helpValue: 0
-      helpMin: 0
-      helpMax: 10
-    - modType: 2
-      durability: 0
-      durMin: 50
-      durMax: 100
-      helpValue: 0
-      helpMin: 0
-      helpMax: 10
-    - modType: 3
-      durability: 0
-      durMin: 50
-      durMax: 100
-      helpValue: 0
-      helpMin: 0
-      helpMax: 10
+    weaponMods: []
   model: {fileID: -927199367670048503, guid: 48b83f4652eac274aaccef2e6ebb3e7b, type: 3}
   weaponScript: {fileID: 11400000, guid: d1c078f03bddf5f489a11d0e8eb764e7, type: 2}
+  defaultMods:
+  - {fileID: 11400000, guid: 3ac2b714ad9f8794aa0c218af8c3d1ef, type: 2}
+  - {fileID: 11400000, guid: 5a6a0d1839119a643a4f5964ff5f1985, type: 2}
+  - {fileID: 11400000, guid: a76df45bf29a61841b8c502dc661890d, type: 2}
+  - {fileID: 11400000, guid: 8b20f4d4147c7694796fcbae73055bc5, type: 2}

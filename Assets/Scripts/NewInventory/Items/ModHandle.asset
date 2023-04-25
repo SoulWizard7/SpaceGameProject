@@ -10,16 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
-  m_Name: BurstRifle
+  m_Name: ModHandle
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 6edfae211b8e952438e31cdf84799f15, type: 3}
+  uiDisplay: {fileID: 21300000, guid: b533c652136df4744a089524507a44c6, type: 3}
   stackable: 0
-  type: 5
+  type: 6
   description: 
   data:
-    Name: Burst Rifle
-    Id: 9
+    Name: Weapon Mod Handle
+    Id: 12
     buffs: []
-    weaponMods: []
-  model: {fileID: -927199367670048503, guid: 1fd3f599f31216545bc2aa73164c4ed2, type: 3}
-  weaponScript: {fileID: 11400000, guid: 5db2f137ed28def48b168c14d62c13fc, type: 2}
+    weaponMods:
+    - modType: 3
+      durability: 7
+      durMin: 0
+      durMax: 0
+      helpValue: 7
+      helpMin: 0
+      helpMax: 0
+      itemId: 12
+  model: {fileID: 6092731379541940764, guid: da398d74996245f4c8a9253e8e6eb6a5, type: 3}
+  weaponScript: {fileID: 0}
