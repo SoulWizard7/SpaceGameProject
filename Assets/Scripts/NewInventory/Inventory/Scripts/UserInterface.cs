@@ -108,7 +108,6 @@ public abstract class UserInterface : MonoBehaviour
     {
         _hoverTimer = 0f;
         _isHovering = true;
-        print("ass");
     }
 
     private void Update()

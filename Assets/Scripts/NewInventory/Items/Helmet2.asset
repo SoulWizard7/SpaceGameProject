@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c31402754336c4e9d23c0671bc7a27, type: 3}
-  m_Name: ModStock
+  m_Name: Helmet2
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: ba345f2f643d842459447c374943401d, type: 3}
+  uiDisplay: {fileID: 21300000, guid: 093d252d1d41041c8b4df35c330dcc59, type: 3}
   stackable: 0
-  type: 6
+  type: 2
   description: 
   data:
-    Name: Weapon Mod Stock
-    Id: 11
-    buffs: []
-    weaponMods:
-    - modType: 1
-      durability: 2
-      durMin: 2
-      durMax: 2
-      helpValue: 2
-      helpMin: 2
-      helpMax: 2
-      itemId: 11
-  model: {fileID: 6210532260800422275, guid: 07484937af1439647b7195701c991fcc, type: 3}
+    Name: Helmet
+    Id: 5
+    buffs:
+    - attribute: 2
+      value: 0
+      min: 10
+      max: 20
+    - attribute: 3
+      value: 0
+      min: 10
+      max: 20
+    weaponMods: []
+  model: {fileID: 6092731379541940764, guid: 7aae7ab882f6fe14a86bed230eb912e0, type: 3}
   weaponScript: {fileID: 0}
