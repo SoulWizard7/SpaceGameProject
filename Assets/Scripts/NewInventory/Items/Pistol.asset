@@ -19,11 +19,7 @@ MonoBehaviour:
   data:
     Name: Pistol
     Id: 6
-    buffs:
-    - attribute: 1
-      value: 0
-      min: 5
-      max: 10
+    buffs: []
     weaponMods: []
   model: {fileID: -927199367670048503, guid: 085d8ba2d90c5b04bae68d0e13aed980, type: 3}
   weaponScript: {fileID: 11400000, guid: 6fda74d9d6fc03e40b7eb8ee2462cf76, type: 2}

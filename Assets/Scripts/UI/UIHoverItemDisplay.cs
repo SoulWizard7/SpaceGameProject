@@ -12,11 +12,14 @@ public class UIHoverItemDisplay : MonoBehaviour
     public TextMeshProUGUI itemValueText;
     public TextMeshProUGUI itemComparedValueText;
 
-    private int[] itemValues = new []{0,0,0,0};
-    private int[] itemComparedValues = new []{0,0,0,0};
+    private float[] itemValues = new []{0f,0f,0f,0f};
+    private float[] itemComparedValues = new []{0f,0f,0f,0f};
     
-    public void SetItemValue(Attributes attribute, int value) => itemValues[(int) attribute] = value;
-    public void SetComparedItemValue(Attributes attribute, int value) => itemComparedValues[(int) attribute] = value;
+    public static string EquipmentValues = "MovementSpeed\nAimBuff\nStamina\nArmor";
+    public static string WeaponValues = "FireType\nDamage\nFireRate";
+    
+    public void SetEquipmentItemValue(Attributes attribute, float value) => itemValues[(int) attribute] = value;
+    public void SetComparedItemValue(Attributes attribute, float value) => itemComparedValues[(int) attribute] = value;
 
     public void ResetItemValues()
     {
@@ -28,6 +31,27 @@ public class UIHoverItemDisplay : MonoBehaviour
         {
             itemComparedValues[i] = 0;
         }
+    }
+    
+    public void SetEquipmentItemValues(Item item) // Can remove string perhaps?
+    {
+        itemBuffNameText.text = EquipmentValues;
+        for (int i = 0; i < item.buffs.Length; i++)
+        {
+            SetEquipmentItemValue(item.buffs[i].attribute, item.buffs[i].value);
+        }
+    }
+
+    public void SetAndUpdateWeaponItemValues(Item item, ItemObject itemObject)
+    {
+        itemBuffNameText.text = WeaponValues;
+        //"FireType\nDamage\nFireRate";
+        string a = String.Concat(itemObject.weaponScript.GetFireType(), "\n");
+        a = String.Concat(a, itemObject.weaponScript.GetDamage(), "\n");
+        itemValues[1] = itemObject.weaponScript.GetDamage();
+        a = String.Concat(a, itemObject.weaponScript.GetFireRate(), "/s", "\n");
+        itemValues[2] = itemObject.weaponScript.GetFireRate();
+        itemValueText.text = a;
     }
 
     public void UpdateItemValues()
@@ -53,7 +77,7 @@ public class UIHoverItemDisplay : MonoBehaviour
         itemComparedValueText.text = a;
     }
 
-    public int GetValue(Attributes attribute)
+    public float GetValue(Attributes attribute)
     {
         return itemValues[(int)attribute];
     }
@@ -63,7 +87,7 @@ public class UIHoverItemDisplay : MonoBehaviour
         itemName.text = "";
     }
     
-    private string GetValueAsString(int value)
+    private string GetValueAsString(float value)
     {
         if (value > 0)
         {
@@ -72,7 +96,7 @@ public class UIHoverItemDisplay : MonoBehaviour
         return String.Concat(value.ToString(), "\n");
     }
     
-    private string GetComparedValueAsString(int value)
+    private string GetComparedValueAsString(float value)
     {
         if (value > 0)
         {
@@ -86,6 +110,13 @@ public class UIHoverItemDisplay : MonoBehaviour
 
         return "";
     }
-    
-    
+
+    public void RemoveAllText()
+    {
+        itemName.text = "";
+        itemBuffNameText.text = "";
+        itemValueText.text = "";
+        itemComparedValueText.text = "";
+        ResetItemValues();
+    }
 }

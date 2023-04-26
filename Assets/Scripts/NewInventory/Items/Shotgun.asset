@@ -19,11 +19,7 @@ MonoBehaviour:
   data:
     Name: Shotgun
     Id: 8
-    buffs:
-    - attribute: 1
-      value: 0
-      min: 5
-      max: 10
+    buffs: []
     weaponMods: []
   model: {fileID: -927199367670048503, guid: 7c0a61129beb9f1429eabd49903adb4e, type: 3}
   weaponScript: {fileID: 11400000, guid: 3081cf6c6702dc74a9494296519d98cb, type: 2}

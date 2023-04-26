@@ -83,9 +83,9 @@ public abstract class UserInterface : MonoBehaviour
 
     private void OnSlotUpdate(InventorySlot _slot)
     {
-        Image slotImage = _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>();
+        Image slotImage = _slot.slotDisplay.transform.GetChild(1).GetComponentInChildren<Image>();
 
-        if (_slot.item.Id >= 0) //slot has item in it
+        if (_slot.data.Id >= 0) //slot has item in it
         {
             slotImage.sprite = _slot.ItemObject.uiDisplay;
             slotImage.color = new Color(1, 1, 1, 1);
@@ -98,6 +98,16 @@ public abstract class UserInterface : MonoBehaviour
             slotImage.color = new Color(1, 1, 1, 0);
             _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "";
         }
+    }
+
+    public void EnableHighlight(InventorySlot _slot)
+    {
+        _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0.3f);
+    }
+
+    public void DisableHighlight(InventorySlot _slot)
+    {
+        _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
     }
 
     private bool _isHovering;
@@ -153,13 +163,13 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnClick(GameObject obj)
     {
-        GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+        GetUIController().uiItemDisplay.UpdateItemDisplay(slotsOnInterface[obj]);
     }
 
     public GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
-        if (slotsOnInterface[obj].item.Id >= 0)
+        if (slotsOnInterface[obj].data.Id >= 0)
         {
             tempItem = new GameObject();
             var rt = tempItem.AddComponent<RectTransform>();
@@ -177,7 +187,7 @@ public abstract class UserInterface : MonoBehaviour
 
         if (MouseData.interfaceMouseIsOver == null)
         {
-            GetController().SpawnObject(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+            GetController().SpawnObject(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].data);
             slotsOnInterface[obj].RemoveItem();
             if (inventory.type == InterfaceType.Weapon)
             {
@@ -199,7 +209,7 @@ public abstract class UserInterface : MonoBehaviour
 
         if (MouseData.interfaceMouseIsOver == null)
         {
-            GetController().SpawnObject(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].item);
+            GetController().SpawnObject(slotsOnInterface[obj].ItemObject, slotsOnInterface[obj].data);
             slotsOnInterface[obj].RemoveItem();
             if (inventory.type == InterfaceType.Weapon)
             {
@@ -248,9 +258,9 @@ public static class ExtentionMethods
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
         {
-            Image slotImage = _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>();
+            Image slotImage = _slot.Key.transform.GetChild(1).GetComponentInChildren<Image>();
             
-            if (_slot.Value.item.Id >= 0) //slot has item in it
+            if (_slot.Value.data.Id >= 0) //slot has item in it
             {
                 slotImage.sprite = _slot.Value.ItemObject.uiDisplay;
                 slotImage.color = new Color(1, 1, 1, 1);

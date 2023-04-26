@@ -24,20 +24,21 @@ public class WeaponBase : ScriptableObject
     {
         return angleInDegrees * (TAU / 360);
     }
-    
 
-    [SerializeField]protected FireType fireType;
-    [SerializeField]protected int projectileAmount = 1;
+    [SerializeField] protected int damage;
+    [SerializeField] protected FireType fireType;
+    [SerializeField] protected int projectileAmount = 1;
     [Tooltip("Degrees, plus and minus from forward angle")]
-    [SerializeField]protected float aimDistortion = 0;
+    [SerializeField] protected float aimDistortion = 0;
     [Tooltip("Degrees added for every projectile amount")]
-    [SerializeField]protected float spreadAngle = 0f;
-    [SerializeField]protected float firePointDist = 0f;
-    [SerializeField]protected float fireRate = 1f;
-    [SerializeField]protected float burstFireRate = 1f;
+    [SerializeField] protected float spreadAngle = 0f;
+    [SerializeField] protected float firePointDist = 0f;
+    [SerializeField] protected float fireRate = 1f;
+    [SerializeField] protected float burstFireRate = 1f;
 
     public FireType GetFireType() => fireType;
     public float GetFireRate() => fireRate;
+    public int GetDamage() => damage;
     public float GetBurstFireRate() => burstFireRate * projectileAmount + fireRate;
 
     public virtual void FireWeapon(Vector3 firePoint, Vector3 dir) {}

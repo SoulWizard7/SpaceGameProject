@@ -20,6 +20,7 @@ public class UIHoverItemDisplayController : MonoBehaviour
     public Item currentHoveredItem;
     public InteractionController interactionController;
 
+
     private void Start()
     {
         _hoverItemDisplay.SetItemDisplayNull();
@@ -33,77 +34,53 @@ public class UIHoverItemDisplayController : MonoBehaviour
         {
             if (currentHoveredItemObject.weaponScript && interactionController.GetCurrentWeapon())
             {
-                var a = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-                var b = interactionController.weapons.GetSlots[interactionController.playerShooting.currentWeaponIndex];
+                var hoveredWeapon = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+                var equippedWeapon = interactionController.weapons.GetSlots[interactionController.playerShooting.currentWeaponIndex];
 
-                if (a != b)
+                if (hoveredWeapon != equippedWeapon)
                 {
                     _compareItemDisplay.itemName.text = interactionController.GetCurrentWeapon().data.Name;
+                    _compareItemDisplay.SetAndUpdateWeaponItemValues(equippedWeapon.data, equippedWeapon.ItemObject);
+                    // CompareItems();
+                    // _compareItemDisplay.UpdateComparedItemValues(); // fire rate is wrong color, fml
+                    // _hoverItemDisplay.UpdateComparedItemValues();
                     _compareItem.SetActive(true);
                 }
             }
+            else
+            {
+                _compareItem.SetActive(false);
+            }
         }
     }
 
-    private string GetComparedValueAsString(int value1, int value2)
+    private void CompareItems()
     {
-        int value = value1 - value2;
-        string valueAsString = String.Empty;
-        if (value > 0)
+        for (int i = 0; i < 4; i++) // Maybe not good to hardcode 4
         {
-            valueAsString = String.Concat("+", value.ToString());
-            return StringExtensions.AddColor(valueAsString, Color.green);
+            _compareItemDisplay.SetComparedItemValue((Attributes)i, _compareItemDisplay.GetValue((Attributes)i) - _hoverItemDisplay.GetValue((Attributes)i));
+            _hoverItemDisplay.SetComparedItemValue((Attributes)i, _hoverItemDisplay.GetValue((Attributes)i) - _compareItemDisplay.GetValue((Attributes)i));
         }
-        return StringExtensions.AddColor(value.ToString(), Color.red);
     }
 
-    private string GetValueAsString(int value)
-    {
-        if (value > 0)
-        {
-            return String.Concat("+", value.ToString(), "\n");
-        }
-        return String.Concat(value.ToString(), "\n");
-    }
-
-    private void UpdateCompareEquipmentDisplay()
+    private void UpdateCompareEquipmentDisplay(int slot)
     {
         if (_hoverItem.activeSelf && MouseData.interfaceMouseIsOver.inventory.type != InterfaceType.Equipment) // dont need to compare if hovered interface is equipment interface
         {
-            if (currentHoveredItemObject.type == ItemType.Helmet && interactionController.equipment.GetSlots[0].ItemObject) // Has item in helmet slot
+            if (interactionController.equipment.GetSlots[slot].ItemObject) // Has item in equipment slot
             {
                 _compareItem.SetActive(true);
+                _compareItemDisplay.itemBuffNameText.text = UIHoverItemDisplay.EquipmentValues;
                 
-                var compareItem = interactionController.equipment.GetSlots[0];
+                var compareItem = interactionController.equipment.GetSlots[slot];
                 
                 _compareItemDisplay.itemName.text = compareItem.ItemObject.data.Name;
-                _compareItemDisplay.ResetItemValues();
-
-                for (int i = 0; i < compareItem.item.buffs.Length; i++)
-                {
-                    Attributes curAttribute = compareItem.item.buffs[i].attribute;
-                    _compareItemDisplay.SetItemValue(curAttribute, compareItem.item.buffs[i].value);
-                }
-
-                for (int i = 0; i < 3; i++) // Maybe not good to hardcode 4
-                {
-                    _compareItemDisplay.SetComparedItemValue((Attributes)i, _compareItemDisplay.GetValue((Attributes)i) - _hoverItemDisplay.GetValue((Attributes)i));
-                    _hoverItemDisplay.SetComparedItemValue((Attributes)i, _hoverItemDisplay.GetValue((Attributes)i) - _compareItemDisplay.GetValue((Attributes)i));
-                }
+                _compareItemDisplay.SetEquipmentItemValues(compareItem.data);
                 
+                CompareItems();
                 _compareItemDisplay.UpdateItemValues();
                 _compareItemDisplay.UpdateComparedItemValues();
                 _hoverItemDisplay.UpdateComparedItemValues();
-            }
-            else if (currentHoveredItemObject.type == ItemType.Chest && interactionController.equipment.GetSlots[1].ItemObject)
-            {
-                _compareItemDisplay.itemName.text = interactionController.equipment.GetSlots[1].ItemObject.data.Name;
-                _compareItem.SetActive(true);
-            }
-            else if (currentHoveredItemObject.type == ItemType.Boots && interactionController.equipment.GetSlots[2].ItemObject)
-            {
-                _compareItemDisplay.itemName.text = interactionController.equipment.GetSlots[2].ItemObject.data.Name;
-                _compareItem.SetActive(true);
             }
         }
     }
@@ -112,33 +89,46 @@ public class UIHoverItemDisplayController : MonoBehaviour
     {
         currentHoveredItemObject = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver].ItemObject;
         if(!currentHoveredItemObject) return;
-        currentHoveredItem = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver].item;
+        currentHoveredItem = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver].data;
 
         _hoverItem.SetActive(true);
         _compareItem.SetActive(false);
+
+        _hoverItemDisplay.RemoveAllText();
+        _compareItemDisplay.RemoveAllText();
         
-        _hoverItemDisplay.ResetItemValues();
-        _hoverItemDisplay.UpdateComparedItemValues();
         
         _hoverItemDisplay.itemName.text = currentHoveredItemObject.data.Name;
 
         if (currentHoveredItemObject.type == ItemType.Weapon)
         {
+            _hoverItemDisplay.SetAndUpdateWeaponItemValues(currentHoveredItem, currentHoveredItemObject);
             UpdateCompareWeaponDisplay();
         }
-        else if (currentHoveredItemObject.type == ItemType.Helmet || currentHoveredItemObject.type == ItemType.Chest || currentHoveredItemObject.type == ItemType.Boots)
+        else if (currentHoveredItemObject.type == ItemType.Helmet)
         {
-            for (int i = 0; i < currentHoveredItem.buffs.Length; i++)
-            {
-                _hoverItemDisplay.SetItemValue(currentHoveredItem.buffs[i].attribute, currentHoveredItem.buffs[i].value);
-            }
-            
+            _hoverItemDisplay.SetEquipmentItemValues(currentHoveredItem);
             _hoverItemDisplay.UpdateItemValues();
-            
-            UpdateCompareEquipmentDisplay();
+            UpdateCompareEquipmentDisplay(0);
+        }
+        else if (currentHoveredItemObject.type == ItemType.Chest)
+        {
+            _hoverItemDisplay.SetEquipmentItemValues(currentHoveredItem);
+            _hoverItemDisplay.UpdateItemValues();
+            UpdateCompareEquipmentDisplay(1);
+        }
+        else if (currentHoveredItemObject.type == ItemType.Boots)
+        {
+            _hoverItemDisplay.SetEquipmentItemValues(currentHoveredItem);
+            _hoverItemDisplay.UpdateItemValues();
+            UpdateCompareEquipmentDisplay(2);
+        }
+        else
+        {
+            _hoverItemDisplay.itemBuffNameText.text = currentHoveredItemObject.hoverDescription;
         }
     }
-
+    
     public void DisableHoverItemDisplay()
     {
         _hoverItem.SetActive(false);

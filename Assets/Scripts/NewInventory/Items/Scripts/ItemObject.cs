@@ -37,8 +37,10 @@ public class ItemObject : ScriptableObject
     public Sprite uiDisplay;
     public bool stackable;
     public ItemType type;
-    [TextArea(15, 20)] 
+    [TextArea(8, 20)] 
     public string description;
+    [TextArea(2, 20)]
+    public string hoverDescription;
     public Item data = new Item();
     public GameObject model;
     public WeaponBase weaponScript;

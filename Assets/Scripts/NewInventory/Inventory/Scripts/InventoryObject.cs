@@ -60,7 +60,7 @@ public class InventoryObject : ScriptableObject
             int counter = 0;
             for (int i = 0; i < GetSlots.Length; i++)
             {
-                if (GetSlots[i].item.Id <= -1)
+                if (GetSlots[i].data.Id <= -1)
                 {
                     counter++;
                 }
@@ -73,7 +73,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id == _item.Id)
+            if (GetSlots[i].data.Id == _item.Id)
             {
                 return GetSlots[i];
             }
@@ -85,7 +85,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id <= -1)
+            if (GetSlots[i].data.Id <= -1)
             {
                 GetSlots[i].UpdateSlot(_item, _amount);
                 return GetSlots[i];
@@ -104,7 +104,7 @@ public class InventoryObject : ScriptableObject
                 Debug.Log("ass2");
                 Debug.Log(item2.parent.inventory.GetSlotIndex(item2));
 
-                item2.parent.GetUIController().uiItemDisplay.currentDisplayItem.weaponMods[item2.parent.inventory.GetSlotIndex(item2)] = new ItemMod(item1.item.weaponMods[0].modType, item1.item.weaponMods[0].durability, item1.item.weaponMods[0].helpValue, item1.item.weaponMods[0].itemId);
+                item2.parent.GetUIController().uiItemDisplay.currentDisplayItem.weaponMods[item2.parent.inventory.GetSlotIndex(item2)] = new ItemMod(item1.data.weaponMods[0].modType, item1.data.weaponMods[0].durability, item1.data.weaponMods[0].helpValue, item1.data.weaponMods[0].itemId);
             }
             if (item1.parent.inventory.type == InterfaceType.WeaponMod)
             {
@@ -112,9 +112,9 @@ public class InventoryObject : ScriptableObject
                 Debug.Log("ass1");
             }
             
-            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
-            item2.UpdateSlot(item1.item, item1.amount);
-            item1.UpdateSlot(temp.item, temp.amount);
+            InventorySlot temp = new InventorySlot(item2.data, item2.amount);
+            item2.UpdateSlot(item1.data, item1.amount);
+            item1.UpdateSlot(temp.data, temp.amount);
             
 
             // Is now an event in UpdateSlot - OnAfterUpdate
@@ -136,7 +136,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item == _item)
+            if (GetSlots[i].data == _item)
             {
                 GetSlots[i].UpdateSlot(null, 0);
             }
@@ -173,7 +173,7 @@ public class InventoryObject : ScriptableObject
             Inventory newContainer = (Inventory)formatter.Deserialize(stream);
             for (int i = 0; i < GetSlots.Length; i++)
             {
-                GetSlots[i].UpdateSlot(newContainer.Slots[i].item, newContainer.Slots[i].amount);
+                GetSlots[i].UpdateSlot(newContainer.Slots[i].data, newContainer.Slots[i].amount);
             }
             stream.Close();
         }
@@ -211,16 +211,16 @@ public class InventorySlot //Data class
     [System.NonSerialized] public SlotUpdated OnBeforeUpdate;
     [System.NonSerialized] public SlotUpdated OnAfterUpdate;
     
-    public Item item = new Item();
+    public Item data = new Item();
     public int amount;
 
     public ItemObject ItemObject
     {
         get
         {
-            if (item.Id >= 0)
+            if (data.Id >= 0)
             {
-                return parent.inventory.database.itemObjects[item.Id];
+                return parent.inventory.database.itemObjects[data.Id];
             }
             return null;
         }
@@ -242,7 +242,7 @@ public class InventorySlot //Data class
         {
             OnBeforeUpdate.Invoke(this);
         }
-        item = _item;
+        data = _item;
         amount = _amount;
         
         if (OnAfterUpdate != null)
@@ -263,7 +263,7 @@ public class InventorySlot //Data class
 
     public void AddAmount(int value)
     {
-        UpdateSlot(item, amount += value);
+        UpdateSlot(data, amount += value);
     }
 
     public bool CanPlaceInSlot(ItemObject _itemObject)

@@ -56,13 +56,13 @@ public class PlayerStats : MonoBehaviour
             case InterfaceType.Equipment:
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed ITems: ", string.Join(", ", _slot.AllowedItems)));
                 
-                for (int i = 0; i < _slot.item.buffs.Length; i++)
+                for (int i = 0; i < _slot.data.buffs.Length; i++)
                 {
                     for (int j = 0; j < attributes.Length; j++)
                     {
-                        if (attributes[j].type == _slot.item.buffs[i].attribute)
+                        if (attributes[j].type == _slot.data.buffs[i].attribute)
                         {
-                            attributes[j].value.RemoveModifier(_slot.item.buffs[i]);
+                            attributes[j].value.RemoveModifier(_slot.data.buffs[i]);
                         }
                     }
                 }
@@ -90,13 +90,13 @@ public class PlayerStats : MonoBehaviour
             case InterfaceType.Equipment:
                 print(string.Concat("placed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed ITems: ", string.Join(", ", _slot.AllowedItems)));
 
-                for (int i = 0; i < _slot.item.buffs.Length; i++)
+                for (int i = 0; i < _slot.data.buffs.Length; i++)
                 {
                     for (int j = 0; j < attributes.Length; j++)
                     {
-                        if (attributes[j].type == _slot.item.buffs[i].attribute)
+                        if (attributes[j].type == _slot.data.buffs[i].attribute)
                         {
-                            attributes[j].value.AddModifier(_slot.item.buffs[i]);
+                            attributes[j].value.AddModifier(_slot.data.buffs[i]);
                         }
                     }
                 }

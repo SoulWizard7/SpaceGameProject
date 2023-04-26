@@ -11,7 +11,8 @@ public class PlayerShooting : MonoBehaviour
     
     private FireType _fireType;
     private GameObject _currentWeaponGameObject;
-    private WeaponBase _currentWeapon;
+    private WeaponBase _currentWeaponScript;
+    private ItemObject _currentWeaponItemObject;
 
     private InteractionController _controller;
     private TopDownMovement _topDownMovement;
@@ -24,7 +25,11 @@ public class PlayerShooting : MonoBehaviour
     private bool _canFire;
     private float _fireRate;
     private float _fireTimer;
-    private Vector3 GetFirePoint() => gunPosition.position + transform.forward * _currentWeapon.GetFirePointDist(); //TODO make better system for this piece of shit
+    private int _fullDamage;
+    
+    public int GetFullDamage() => _fullDamage;
+    
+    private Vector3 GetFirePoint() => gunPosition.position + transform.forward * _currentWeaponScript.GetFirePointDist(); //TODO make better system for this piece of shit
     private Vector3 GetFirePointDir()
     {
         if (InputHandler.mouseRightHold)
@@ -74,9 +79,10 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+
     public void FireWeapon()
     {
-        if (_topDownMovement.bIsDodging || !_currentWeapon || MouseData.tempItemBeingDragged != null) return;
+        if (_topDownMovement.bIsDodging || !_currentWeaponScript || MouseData.tempItemBeingDragged != null) return;
 
         if (!EventSystem.current.IsPointerOverGameObject())
         {
@@ -96,8 +102,8 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_canFire)
         {
-            _currentWeapon.FireWeapon(GetFirePoint(), GetFirePointDir());
-            _fireTimer -= _currentWeapon.GetFireRate();
+            _currentWeaponScript.FireWeapon(GetFirePoint(), GetFirePointDir());
+            _fireTimer -= _currentWeaponScript.GetFireRate();
             _canFire = false;
         }
         
@@ -113,9 +119,9 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_canFire)
         {
-            _currentWeapon.FireWeapon(GetFirePoint(), GetFirePointDir());
-            StartCoroutine(_currentWeapon.FireWeaponCoroutine(GetFirePoint(), GetFirePointDir()));
-            _fireTimer -= _currentWeapon.GetBurstFireRate();
+            _currentWeaponScript.FireWeapon(GetFirePoint(), GetFirePointDir());
+            StartCoroutine(_currentWeaponScript.FireWeaponCoroutine(GetFirePoint(), GetFirePointDir()));
+            _fireTimer -= _currentWeaponScript.GetBurstFireRate();
             _canFire = false;
         }
         
@@ -148,13 +154,12 @@ public class PlayerShooting : MonoBehaviour
         while (InputHandler.mouseLeftHold)
         {
             _fireTimer = 0f;
-            _currentWeapon.FireWeapon(GetFirePoint(), GetFirePointDir());
-            yield return new WaitForSeconds(_currentWeapon.GetFireRate());
+            _currentWeaponScript.FireWeapon(GetFirePoint(), GetFirePointDir());
+            yield return new WaitForSeconds(_currentWeaponScript.GetFireRate());
         }
 
         _canFire = true;
     }
-    
 
     public void CheckWeapon()
     {
@@ -163,10 +168,10 @@ public class PlayerShooting : MonoBehaviour
         
         if (_currentWeaponId == -1) // has no weapon
         {
-            if (_controller.weapons.GetSlots[currentWeaponIndex].item.Id >= 0) // slot is not empty
+            if (_controller.weapons.GetSlots[currentWeaponIndex].data.Id >= 0) // slot is not empty
             {
                 CreateCurrentWeapon(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject.model);
-                SetUpGunStats(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject.weaponScript);
+                SetUpGunStats(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject);
             }
             else // slot is empty
             {
@@ -175,13 +180,13 @@ public class PlayerShooting : MonoBehaviour
         }
         else // has weapon
         {
-            if (_controller.weapons.GetSlots[currentWeaponIndex].item.Id >= 0) // slot is not empty
+            if (_controller.weapons.GetSlots[currentWeaponIndex].data.Id >= 0) // slot is not empty
             {
-                if (_currentWeaponId != _controller.weapons.GetSlots[currentWeaponIndex].item.Id) // id´s do not match
+                if (_currentWeaponId != _controller.weapons.GetSlots[currentWeaponIndex].data.Id) // id´s do not match
                 {
                     RemoveCurrentWeapon();
                     CreateCurrentWeapon(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject.model);
-                    SetUpGunStats(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject.weaponScript);
+                    SetUpGunStats(_controller.weapons.GetSlots[currentWeaponIndex].ItemObject);
                 }
             }
             else //slot is empty
@@ -194,22 +199,34 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(_currentWeapon == null) return;
+        if(_currentWeaponScript == null) return;
         
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(GetFirePoint(), .1f);
     }
 
-    private void SetUpGunStats(WeaponBase weapon)
+    private void SetUpGunStats(ItemObject itemObject)
     {
-        _currentWeapon = weapon;
-        _fireType = _currentWeapon.GetFireType();
-        _fireTimer = _fireRate = _currentWeapon.GetFireRate();
+        _currentWeaponItemObject = itemObject;
+        _currentWeaponScript = itemObject.weaponScript;
+        _fireType = _currentWeaponScript.GetFireType();
+        _fireTimer = _fireRate = _currentWeaponScript.GetFireRate();
+
+        _fullDamage = _currentWeaponScript.GetDamage();
+        for (int i = 0; i < _currentWeaponItemObject.data.weaponMods.Length; i++)
+        {
+            if (_currentWeaponItemObject.data.weaponMods[i].modType == ModType.Handle)
+            {
+                _fullDamage += _currentWeaponItemObject.data.weaponMods[i].helpValue;
+            } 
+        }
     }
+
+    
 
     private void RemoveCurrentWeapon()
     {
-        _currentWeapon = null;
+        _currentWeaponScript = null;
         _currentWeaponId = -1;
         if(_currentWeaponGameObject) Destroy(_currentWeaponGameObject);
     }
